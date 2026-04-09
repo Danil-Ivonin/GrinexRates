@@ -1,0 +1,13 @@
+version: "2"
+
+linters:
+  default: standard
+  exclusions:
+    generated: strict
+    paths:
+      - ".*\\.pb\\.go$"
+
+issues:
+  # Report all issues, not just the first N per linter.
+  max-issues-per-linter: 0
+  max-same-issues: 0

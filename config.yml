@@ -1,0 +1,3 @@
+grinex:
+  url: "https://grinex.io/api/v1/spot/depth?symbol=usdta7a5"
+  timeout: 10s
