@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package rates;
+option go_package = "github.com/Danil-Ivonin/GrintexRates/gen/rates";
+
+// RatesService provides access to USDT/RUB market rates from the Grinex exchange
+service RatesService {
+  // GetRates fetches the current ask/bid prices and computes topN and avgNM values
+  rpc GetRates(GetRatesRequest) returns (GetRatesResponse);
+}
+
+// GetRatesRequest carries the rates position parameters
+message GetRatesRequest {
+  // n the position for the topN ask price calculation
+  int32 n = 1;
+  // m the upper position for the avgNM calculation
+  int32 m = 2;
+}
+
+// GetRatesResponse contains the prices and the fetch timestamp
+message GetRatesResponse {
+  // ask_price best ask price
+  string ask_price  = 1;
+  // bid_price best bid price
+  string bid_price  = 2;
+  // top_n ask price at position n
+  string top_n      = 3;
+  // avg_nm arithmetic mean of ask prices from n to m inclusive
+  string avg_nm     = 4;
+  // fetched_at timestamp when the rates was fetched
+  int64  fetched_at = 5;
+}
