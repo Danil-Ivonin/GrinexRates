@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/Danil-Ivonin/GrintexRates/internal/http/dto"
+	"github.com/Danil-Ivonin/GrinexRates/internal/http/dto"
 	"github.com/go-resty/resty/v2"
 )
 

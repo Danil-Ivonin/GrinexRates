@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/Danil-Ivonin/GrintexRates/internal/domain"
+	"github.com/Danil-Ivonin/GrinexRates/internal/domain"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 

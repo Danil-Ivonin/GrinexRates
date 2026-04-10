@@ -3,7 +3,7 @@ package ports
 import (
 	"context"
 
-	"github.com/Danil-Ivonin/GrintexRates/internal/domain"
+	"github.com/Danil-Ivonin/GrinexRates/internal/domain"
 )
 
 type RatesService interface {

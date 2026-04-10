@@ -1,4 +1,4 @@
-module github.com/Danil-Ivonin/GrintexRates
+module github.com/Danil-Ivonin/GrinexRates
 
 go 1.25.5
 
@@ -11,6 +11,7 @@ require (
 	github.com/shopspring/decimal v1.4.0
 	github.com/spf13/pflag v1.0.10
 	github.com/spf13/viper v1.21.0
+	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.61.0
 	go.uber.org/zap v1.27.1
 	google.golang.org/grpc v1.80.0
 	google.golang.org/protobuf v1.36.11

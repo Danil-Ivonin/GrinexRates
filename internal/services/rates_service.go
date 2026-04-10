@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/Danil-Ivonin/GrintexRates/internal/calculator"
-	"github.com/Danil-Ivonin/GrintexRates/internal/domain"
-	"github.com/Danil-Ivonin/GrintexRates/internal/http/dto"
-	"github.com/Danil-Ivonin/GrintexRates/internal/ports"
+	"github.com/Danil-Ivonin/GrinexRates/internal/calculator"
+	"github.com/Danil-Ivonin/GrinexRates/internal/domain"
+	"github.com/Danil-Ivonin/GrinexRates/internal/http/dto"
+	"github.com/Danil-Ivonin/GrinexRates/internal/ports"
 	"github.com/shopspring/decimal"
 )
 
