@@ -9,31 +9,12 @@ import (
 	"github.com/spf13/viper"
 )
 
-type Config struct {
-	// PostgreSQL
-	DBHost     string
-	DBPort     string
-	DBUser     string
-	DBPassword string
-	DBName     string
-	DBSSLMode  string
-
-	// gRPC
-	GRPCPort string
-
-	// Grinex HTTP client
-	GrinexURL     string
-	GrinexTimeout time.Duration
-}
-
 // Load reads configuration
-func Load() *Config {
+func Load() error {
 	_ = godotenv.Load()
 
-	v := viper.New()
-
 	// Define CLI flags
-	pflag.String("db-host", "", "PostgreSQL host (env: DB_HOST)")
+	pflag.String("db-host", "", "PostgreSQL host (enviper: DB_HOST)")
 	pflag.String("db-port", "", "PostgreSQL port (env: DB_PORT)")
 	pflag.String("db-user", "", "PostgreSQL user (env: DB_USER)")
 	pflag.String("db-password", "", "PostgreSQL password (env: DB_PASSWORD)")
@@ -43,45 +24,33 @@ func Load() *Config {
 	pflag.String("grinex-url", "", "Grinex rates endpoint (env: GRINEX_URL)")
 	pflag.Duration("grinex-timeout", 0, "Grinex HTTP request timeout (env: GRINEX_TIMEOUT)")
 	pflag.Parse()
-	_ = v.BindPFlags(pflag.CommandLine)
+	_ = viper.BindPFlags(pflag.CommandLine)
 
-	v.SetConfigName("config")
-	v.SetConfigType("yml")
-	v.AddConfigPath(".")
+	viper.SetConfigName("config")
+	viper.SetConfigType("yml")
+	viper.AddConfigPath(".")
 
-	v.SetDefault("db.host", "localhost")
-	v.SetDefault("db.port", "5432")
-	v.SetDefault("db.user", "postgres")
-	v.SetDefault("db.name", "usdt_rate")
-	v.SetDefault("db.sslmode", "disable")
-	v.SetDefault("grpc.port", "50051")
-	v.SetDefault("grinex.url", "https://grinex.io/api/v1/spot/depth?symbol=usdta7a5")
-	v.SetDefault("grinex.timeout", 10*time.Second)
+	viper.SetDefault("db.host", "localhost")
+	viper.SetDefault("db.port", "5432")
+	viper.SetDefault("db.user", "postgres")
+	viper.SetDefault("db.name", "usdt_rate")
+	viper.SetDefault("db.sslmode", "disable")
+	viper.SetDefault("grpc.port", "50051")
+	viper.SetDefault("grinex.url", "https://grinex.io/api/v1/spot/depth?symbol=usdta7a5")
+	viper.SetDefault("grinex.timeout", 10*time.Second)
 
-	v.SetEnvKeyReplacer(strings.NewReplacer(".", "_", "-", "_"))
-	v.AutomaticEnv()
+	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_", "-", "_"))
+	viper.AutomaticEnv()
 
-	_ = v.ReadInConfig()
-
-	return &Config{
-		DBHost:        v.GetString("db.host"),
-		DBPort:        v.GetString("db.port"),
-		DBUser:        v.GetString("db.user"),
-		DBPassword:    v.GetString("db.password"),
-		DBName:        v.GetString("db.name"),
-		DBSSLMode:     v.GetString("db.sslmode"),
-		GRPCPort:      v.GetString("grpc.port"),
-		GrinexURL:     v.GetString("grinex.url"),
-		GrinexTimeout: v.GetDuration("grinex.timeout"),
-	}
+	return viper.ReadInConfig()
 }
 
 // DSN returns a PostgreSQL connection string
-func (c *Config) DSN() string {
-	return "host=" + c.DBHost +
-		" port=" + c.DBPort +
-		" user=" + c.DBUser +
-		" password=" + c.DBPassword +
-		" dbname=" + c.DBName +
-		" sslmode=" + c.DBSSLMode
+func DSN() string {
+	return "host=" + viper.GetString("db.host") +
+		" port=" + viper.GetString("db.port") +
+		" user=" + viper.GetString("db.user") +
+		" password=" + viper.GetString("db.password") +
+		" dbname=" + viper.GetString("db.name") +
+		" sslmode=" + viper.GetString("db.sslmode")
 }
