@@ -17,5 +17,16 @@ services:
       timeout: 10s
       retries: 5
 
+  app:
+    build: .
+    image: app
+    env_file: .env
+    ports:
+      - "50051:50051"
+      - "9090:9090"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
 volumes:
   postgres:

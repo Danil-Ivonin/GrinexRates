@@ -17,12 +17,13 @@ type Fetcher interface {
 }
 
 type RatesService struct {
-	fetcher Fetcher
-	repo    ports.RatesRepository
+	fetcher        Fetcher
+	repo           ports.RatesRepository
+	avgNMPrecision int32
 }
 
-func NewRatesService(fetcher Fetcher, repo ports.RatesRepository) *RatesService {
-	return &RatesService{fetcher: fetcher, repo: repo}
+func NewRatesService(fetcher Fetcher, repo ports.RatesRepository, avgNMPrecision int32) *RatesService {
+	return &RatesService{fetcher: fetcher, repo: repo, avgNMPrecision: avgNMPrecision}
 }
 
 // GetRates fetches rates, computes topN and avgNM for the given
@@ -52,7 +53,7 @@ func (s *RatesService) GetRates(ctx context.Context, n, m int32) (domain.RateSna
 		return domain.RateSnapshot{}, fmt.Errorf("service: get rates: topN: %w", err)
 	}
 
-	avgNM, err := calculator.AvgNM(askPrices, int(n), int(m))
+	avgNM, err := calculator.AvgNM(askPrices, int(n), int(m), s.avgNMPrecision)
 	if err != nil {
 		return domain.RateSnapshot{}, fmt.Errorf("service: get rates: avgNM: %w", err)
 	}

@@ -56,7 +56,7 @@ func main() {
 	cl := client.New(url, timeout)
 
 	// Service and handler
-	svc := services.NewRatesService(cl, repo)
+	svc := services.NewRatesService(cl, repo, config.AvgNMPrecision())
 	h := handler.NewRatesHandler(svc)
 
 	// Server startup

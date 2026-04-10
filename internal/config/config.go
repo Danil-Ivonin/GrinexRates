@@ -38,11 +38,22 @@ func Load() error {
 	viper.SetDefault("grpc.port", "50051")
 	viper.SetDefault("grinex.url", "https://grinex.io/api/v1/spot/depth?symbol=usdta7a5")
 	viper.SetDefault("grinex.timeout", 10*time.Second)
+	viper.SetDefault("calculator.avgnm_precision", 8)
 
 	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_", "-", "_"))
 	viper.AutomaticEnv()
 
-	return viper.ReadInConfig()
+	if err := viper.ReadInConfig(); err != nil {
+		if _, ok := err.(viper.ConfigFileNotFoundError); !ok {
+			return err
+		}
+	}
+	return nil
+}
+
+// AvgNMPrecision returns the number of decimal places used when rounding AvgNM results
+func AvgNMPrecision() int32 {
+	return int32(viper.GetInt("calculator.avgnm_precision"))
 }
 
 // DSN returns a PostgreSQL connection string

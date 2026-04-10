@@ -2,6 +2,7 @@
 
 BINARY_NAME := server
 CMD_PATH    := ./cmd
+IMAGE_NAME := app
 
 # build compiles the service binary
 build:
@@ -13,7 +14,7 @@ test:
 
 # docker-build builds the Docker image
 docker-build:
-	docker build -t usdt-rate-grpc .
+	docker build -t ${IMAGE_NAME} .
 
 # run starts the service using go run (for local development)
 run:

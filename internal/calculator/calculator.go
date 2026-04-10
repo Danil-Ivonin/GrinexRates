@@ -19,7 +19,7 @@ func TopN(asks []decimal.Decimal, n int) (decimal.Decimal, error) {
 }
 
 // AvgNM returns the arithmetic mean of ask prices from n to m (1-indexed, inclusive)
-func AvgNM(asks []decimal.Decimal, n, m int) (decimal.Decimal, error) {
+func AvgNM(asks []decimal.Decimal, n, m int, precision int32) (decimal.Decimal, error) {
 	if n < 1 {
 		return decimal.Zero, fmt.Errorf("calculator: avgNM: n=%d must be >= 1", n)
 	}
@@ -37,5 +37,5 @@ func AvgNM(asks []decimal.Decimal, n, m int) (decimal.Decimal, error) {
 		sum = sum.Add(asks[i])
 	}
 
-	return sum.Div(count), nil
+	return sum.Div(count).Round(precision), nil
 }
