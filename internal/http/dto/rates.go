@@ -9,6 +9,7 @@ type StockRatesEntry struct {
 }
 
 type StockRates struct {
-	Asks []StockRatesEntry `json:"asks"`
-	Bids []StockRatesEntry `json:"bids"`
+	Timestamp int64             `json:"timestamp"`
+	Asks      []StockRatesEntry `json:"asks"`
+	Bids      []StockRatesEntry `json:"bids"`
 }

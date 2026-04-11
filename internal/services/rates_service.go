@@ -104,7 +104,7 @@ func (s *RatesService) GetRates(ctx context.Context, n, m int32) (domain.RateSna
 		BidPrice:  bidPrice,
 		TopN:      topN,
 		AvgNM:     avgNM,
-		FetchedAt: time.Now().UTC(),
+		FetchedAt: time.Unix(rates.Timestamp, 0).UTC(),
 	}
 
 	if err := s.repo.Create(ctx, snap); err != nil {
