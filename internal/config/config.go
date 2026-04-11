@@ -24,6 +24,7 @@ func Load() error {
 	pflag.String("prometheus-port", "", "Metrics server port (env: PROMETHEUS_PORT)")
 	pflag.String("grinex-url", "", "Grinex rates endpoint (env: GRINEX_URL)")
 	pflag.Duration("grinex-timeout", 0, "Grinex HTTP request timeout (env: GRINEX_TIMEOUT)")
+	pflag.Duration("grinex-timeout", 0, "Grinex HTTP request timeout (env: GRINEX_TIMEOUT)")
 	pflag.Parse()
 	_ = viper.BindPFlags(pflag.CommandLine)
 
